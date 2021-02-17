@@ -45,3 +45,9 @@ app.use(express.static('website'));
        console.log(data);
       
    }
+    const animalData={};
+    app.post('/animal',addAnimal);
+    function addAnimal(req,res){
+      animalData["animal"]=req.body;
+      console.log(animalData);
+    }
