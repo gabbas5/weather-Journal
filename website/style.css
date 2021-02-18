@@ -4,11 +4,11 @@ body{
 }
 
 #app{
-    display: grid;
-    grid-auto-rows: minmax(150px, auto);
+   /* display: grid; 
+    grid-auto-rows: minmax(150px, auto); */
     /* grid-template-columns:  */
     height:100vh;
-    background: #f23557;
+    background: #ebb6bf;
     color: #f0d43a;
     justify-content: center;
     grid-gap: 1em;

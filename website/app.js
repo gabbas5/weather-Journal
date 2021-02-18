@@ -4,33 +4,52 @@
 /* to get value of API from the open weather */
 //  add even listener for action from the user
  document.getElementById('generate').addEventListener('click',performAction);
+  
+
 function performAction(e){
   const newCity=document.getElementById('zip').value;
+  const text=document.getElementById('feelings').value;
+  let feel={
+      feeling:text
+  };
   //calling function fetch API
     getCityWeather(baseURL,newCity,apiKey)
     .then(function(data){
         console.log(data);// here I am getting all data received on console.
         
-        postData('/add',{});// How to put API data here in curly braces.
+        postData('/add', {data:data.name , data:data.sys.country , feal:feel.feeling});
+        // How to put API data here in curly braces but on service side I am getting undefined
+        // please tell me what is wrong.
     })
-     
+     .then(updateUI())
     }
         //  define function to fetech api
-      const getCityWeather=async(baseURL,newCity,apiKey)=>{
+          const getCityWeather=async(baseURL,newCity,apiKey)=>{
           const res=await fetch(baseURL+newCity+apiKey)
           
           try{
               const data=await res.json();
            //  console.log(data);
-
               return data;
           }catch(error){
               console.log('error',error);
 
           }
         
-        }    
-//
+        } 
+           
+// function fo updateing UI
+  const updateUI = async()=>{
+      const request=await fetch('/all');
+      try{
+        const allData= await request.json();
+        console.log(allData);
+        document.getElementById('temp').innerHTML=allData[0].country;
+        document.getElementById('date').innerHTML=allData[0].feeling;
+      }catch(error){
+          console.log('error',error);
+      }
+  }
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
